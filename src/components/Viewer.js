@@ -13,9 +13,8 @@ class Viewer extends React.Component {
     text: this.props.jsonStore.text
   }
 
-  handleChangeText = (editor, data, text) => {
-    // const text = event.target.value
-    console.log('handle')
+  handleChangeText = event => {
+    const text = event.target.value
     this.setState({ text })
     this.props.jsonStore.setText(text)
   }
@@ -37,18 +36,10 @@ class Viewer extends React.Component {
             defaultSize={paneStore.viewerPaneSize}
             onChange={paneStore.setViewerPaneSize}
             pane2Style={{ display: 'flex', width: '50%' }}>
-            {/*<textarea*/}
-            {/*className="text"*/}
-            {/*spellCheck="false"*/}
-            {/*value={this.state.text}*/}
-            {/*onChange={this.handleChangeText}*/}
-            {/*/>*/}
-            <CodeMirror
+            <textarea
+              className="text"
+              spellCheck="false"
               value={this.state.text}
-              options={{
-                lineNumbers: true,
-                mode: ''
-              }}
               onChange={this.handleChangeText}
             />
             <CodeMirror
