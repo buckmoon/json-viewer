@@ -11,7 +11,6 @@
     "mobx": "5.8.0",
     "mobx-react": "latest",
     "mobx-state-tree": "3.10.0",
-    "node-sass": "4.11.0",
     "normalize.css": "8.0.1",
     "react": "16.5.2",
     "react-codemirror": "1.0.0",
@@ -21,14 +20,29 @@
     "react-scripts": "2.0.3",
     "react-split-pane": "0.1.85",
     "recompose": "0.30.0",
-    "store": "2.0.12"
+    "store": "2.0.12",
+    "prop-types": "latest"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "node-sass": "4.11.0",
+    "prettier": "^1.15.3"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "jsxBracketSameLine": true
+  }
+
 }

@@ -3,11 +3,9 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import InputBase from '@material-ui/core/InputBase'
-import Divider from '@material-ui/core/Divider'
 import Tooltip from '@material-ui/core/Tooltip'
 import IconButton from '@material-ui/core/IconButton'
 import VisibilityIcon from '@material-ui/icons/Visibility'
-import SearchIcon from '@material-ui/icons/Search'
 import AddIcon from '@material-ui/icons/AddBox'
 
 const styles = {
@@ -30,7 +28,7 @@ const styles = {
   }
 }
 
-class CustomiInput extends React.Component {
+class CustomInput extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     onEnter: PropTypes.func.isRequired
@@ -79,8 +77,7 @@ class CustomiInput extends React.Component {
             color="primary"
             className={classes.iconButton}
             aria-label="Add"
-            onClick={this.handleClick}
-          >
+            onClick={this.handleClick}>
             <AddIcon />
           </IconButton>
         </Tooltip>
@@ -89,4 +86,4 @@ class CustomiInput extends React.Component {
   }
 }
 
-export default withStyles(styles)(CustomiInput)
+export default withStyles(styles)(CustomInput)

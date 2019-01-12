@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'recompose'
 import { inject, observer } from 'mobx-react'
-import stores from '../stores'
 import { withStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Cancel'
@@ -30,8 +29,19 @@ const styles = theme => ({
     position: 'sticky',
     top: 0
   },
+  row: {
+    height: 35
+  },
   cell: {
-    fontFamily: 'monospace'
+    fontFamily: 'monospace',
+    paddingTop: 10,
+    paddingBottom: 10
+  },
+  cellFullWidth: {
+    width: '100%'
+  },
+  iconButton: {
+    padding: 5
   }
 })
 
@@ -59,44 +69,42 @@ class WatcherTable extends React.Component {
   }
 
   render() {
-    const { classes, watcherStore } = this.props
+    const { classes } = this.props
     const keys = this.createKeys()
 
     return (
       <Paper className={classes.root}>
-        <Table className={classes.table}>
+        <Table className={classes.table} padding="dense">
           <TableHead>
-            <TableRow>
+            <TableRow className={classes.row}>
               <TableCell className={classes.head}>Key</TableCell>
               <TableCell className={classes.head}>Value</TableCell>
-              <TableCell className={classes.head} align="right" />
+              <TableCell
+                className={classes.head}
+                align="right"
+                padding="checkbox"
+              />
             </TableRow>
           </TableHead>
           <TableBody>
-            {keys.map(({ key, value }, idx) => {
-              return (
-                <TableRow key={idx}>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    className={classes.cell}
-                  >
-                    {key}
-                  </TableCell>
-                  <TableCell>
-                    <ObjectInspector data={value} />
-                  </TableCell>
-                  <TableCell align="right">
-                    <IconButton
-                      className={classes.iconButton}
-                      onClick={this.handleClickRemove(idx)}
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              )
-            })}
+            {keys.map(({ key, value }, idx) => (
+              <TableRow className={classes.row} key={idx}>
+                <TableCell component="th" scope="row" className={classes.cell}>
+                  {key}
+                </TableCell>
+                <TableCell
+                  className={`${classes.cell} ${classes.cellFullWidth}`}>
+                  <ObjectInspector data={value} />
+                </TableCell>
+                <TableCell align="right" padding="checkbox">
+                  <IconButton
+                    className={classes.iconButton}
+                    onClick={this.handleClickRemove(idx)}>
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </Paper>

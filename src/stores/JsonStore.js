@@ -1,36 +1,38 @@
-import { types, onSnapshot } from 'mobx-state-tree'
+import { types } from 'mobx-state-tree'
 import store from 'store'
+import debounce from 'lodash/debounce'
+
+const stringify = text => {
+  try {
+    return JSON.stringify(JSON.parse(text), null, 2)
+  } catch ({ message }) {
+    return message
+  }
+}
 
 const JsonStore = types
   .model('JsonStore', {
-    text: types.optional(types.string, '')
+    text: ''
   })
+  .postProcessSnapshot(self => {
+    store.set('text', self.text)
+  })
+  .actions(self => ({
+    setText: debounce(text => self.debouncedSetText(text), 800),
+    debouncedSetText(text) {
+      self.text = text
+    }
+  }))
   .views(self => ({
     get json() {
-      try {
-        const json = JSON.parse(self.text)
-        return JSON.stringify(json, null, 2)
-      } catch {
-        return 'Invalid JSON'
-      }
+      return stringify(self.text)
     },
     get mode() {
       try {
-        JSON.parse(self.text)
-      } catch (e) {
+        return JSON.parse(self.text) && 'application/json'
+      } catch {
         return ''
       }
-      return 'application/json'
-    }
-  }))
-  .actions(self => ({
-    afterCreate() {
-      const defaultText = JSON.stringify(require('../assets/hello.json'))
-      self.text = store.get('text', defaultText)
-    },
-    setText(text) {
-      self.text = text
-      store.set('text', text)
     }
   }))
 

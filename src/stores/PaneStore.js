@@ -1,4 +1,4 @@
-import { types, onSnapshot } from 'mobx-state-tree'
+import { types } from 'mobx-state-tree'
 import store from 'store'
 
 const PaneStore = types
@@ -12,22 +12,16 @@ const PaneStore = types
       types.number
     )
   })
+  .postProcessSnapshot(snapshot => {
+    store.set('main_pane_size', snapshot.mainPaneSize)
+    store.set(`viewer_pane_size`, snapshot.viewerPaneSize)
+  })
   .actions(self => ({
-    afterCreate() {
-      self.mainPaneSize = store.get(`main_pane_size`, '50%')
-      self.viewerPaneSize = store.get(`viewer_pane_size`, '50%')
-    },
     setMainPaneSize(size) {
       store.set(`main_pane_size`, size)
     },
     setViewerPaneSize(size) {
       store.set(`viewer_pane_size`, size)
-    },
-    reset() {
-      self.mainPaneSize = '50%'
-      self.viewerPaneSize = '50%'
-      store.set(`main_pane_size`, '50%')
-      store.set(`viewer_pane_size`, '50%')
     }
   }))
 
