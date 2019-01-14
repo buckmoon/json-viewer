@@ -6,12 +6,15 @@ import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
+import GitHubIcon from './GitHubIcon'
+import Tooltip from '@material-ui/core/Tooltip'
+import IconButton from '@material-ui/core/IconButton'
 
 const styles = {
   root: {
     flexGrow: 0
   },
-  grow: {
+  title: {
     flexGrow: 1
   },
   menuButton: {
@@ -24,32 +27,23 @@ class Header extends React.Component {
     classes: PropTypes.object.isRequired
   }
 
-  handleResetView = () => {
-    this.props.paneStore.reset()
-    // document.location.reload()
-  }
-
   render() {
     const { classes } = this.props
     return (
       <div className={classes.root}>
         <AppBar position="static">
-          <Toolbar variant="dense" disableGutters>
-            <Typography
-              align="center"
-              variant="h6"
-              color="inherit"
-              className={classes.grow}
-            >
+          <Toolbar variant="dense">
+            <Typography variant="h6" color="inherit" className={classes.title}>
               JSON Viewer
             </Typography>
-            {/*
-            <Tooltip title="Reset Pane Size">
-              <IconButton onClick={this.handleResetView} color="inherit">
-                <ResetPaneIcon />
+            <Tooltip title="See the source on GitHub">
+              <IconButton
+                color="inherit"
+                component="a"
+                href={`https://github.com/buckmoon/json-viewer`}>
+                <GitHubIcon />
               </IconButton>
             </Tooltip>
-            */}
           </Toolbar>
         </AppBar>
       </div>
