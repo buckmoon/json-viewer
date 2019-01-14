@@ -1,33 +1,42 @@
 {
   "name": "json-viewer",
   "version": "1.0.0",
-  "description": "",
-  "keywords": [],
+  "homepage": "https://json.buckmoon.io",
+  "bugs": "https://github.com/buckmoon/json-viewer/issues",
+  "license": "MIT",
+  "description": "Online JSON Viewer & Path Watcher",
+  "keywords": [
+    "json"
+  ],
   "main": "src/index.js",
+  "repository": "buckmoon/json-viewer",
   "dependencies": {
-    "@material-ui/core": "3.8.1",
-    "@material-ui/icons": "latest",
-    "lodash": "4.17.11",
+    "@material-ui/core": "^3.8.3",
+    "@material-ui/icons": "3.0.2",
+    "codemirror": "^5.42.2",
+    "lodash.debounce": "^4.0.8",
+    "lodash.get": "^4.4.2",
     "mobx": "5.8.0",
-    "mobx-react": "latest",
+    "mobx-react": "5.4.3",
     "mobx-state-tree": "3.10.0",
     "normalize.css": "8.0.1",
-    "react": "16.5.2",
-    "react-codemirror": "1.0.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.7.0",
     "react-codemirror2": "5.1.0",
-    "react-dom": "16.5.2",
+    "react-dom": "^16.7.0",
     "react-inspector": "2.3.1",
-    "react-scripts": "2.0.3",
     "react-split-pane": "0.1.85",
     "recompose": "0.30.0",
-    "store": "2.0.12",
-    "prop-types": "latest"
+    "store": "2.0.12"
   },
   "devDependencies": {
     "node-sass": "4.11.0",
-    "prettier": "^1.15.3"
+    "prettier": "^1.15.3",
+    "react-scripts": "^2.1.3",
+    "source-map-explorer": "^1.6.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer build/static/js/main.*",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
@@ -44,5 +53,4 @@
     "singleQuote": true,
     "jsxBracketSameLine": true
   }
-
 }

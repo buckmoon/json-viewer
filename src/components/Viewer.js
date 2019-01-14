@@ -1,5 +1,5 @@
 import React from 'react'
-import { compose } from 'recompose'
+import compose from 'recompose/compose'
 import { inject, observer } from 'mobx-react'
 import SplitPane from 'react-split-pane'
 import { Controlled as CodeMirror } from 'react-codemirror2'

@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree'
 import store from 'store'
-import debounce from 'lodash/debounce'
+import debounce from 'lodash.debounce'
 
 const stringify = text => {
   try {

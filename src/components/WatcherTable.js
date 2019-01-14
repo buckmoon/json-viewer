@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { compose } from 'recompose'
+import compose from 'recompose/compose'
 import { inject, observer } from 'mobx-react'
-import { withStyles } from '@material-ui/core/styles'
+import withStyles from '@material-ui/core/styles/withStyles'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Cancel'
 import Table from '@material-ui/core/Table'
@@ -12,9 +12,9 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import { ObjectInspector } from 'react-inspector'
-import _ from 'lodash'
+import get from 'lodash.get'
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     width: '100%',
     height: '100%',
@@ -45,71 +45,71 @@ const styles = theme => ({
   }
 })
 
-class WatcherTable extends React.Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired
-  }
-
-  get json() {
+function WatcherTable({ classes, jsonStore, watcherStore }) {
+  function getJsonObject(json) {
     try {
-      return JSON.parse(this.props.jsonStore.json)
+      return JSON.parse(json)
     } catch {
       return {}
     }
   }
 
-  createKeys = () => {
-    return this.props.watcherStore.keys.map(key => {
-      return { key, value: _.get(this.json, key, undefined) }
-    })
+  function createKeys() {
+    const json = getJsonObject(jsonStore.json)
+    return watcherStore.keys.map(key => ({
+      key,
+      value: get(json, key, undefined)
+    }))
   }
 
-  handleClickRemove = index => () => {
-    this.props.watcherStore.removeKeyAt(index)
+  function handleClickRemove(index) {
+    return () => {
+      watcherStore.removeKeyAt(index)
+    }
   }
 
-  render() {
-    const { classes } = this.props
-    const keys = this.createKeys()
+  const keys = createKeys()
 
-    return (
-      <Paper className={classes.root}>
-        <Table className={classes.table} padding="dense">
-          <TableHead>
-            <TableRow className={classes.row}>
-              <TableCell className={classes.head}>Key</TableCell>
-              <TableCell className={classes.head}>Value</TableCell>
-              <TableCell
-                className={classes.head}
-                align="right"
-                padding="checkbox"
-              />
+  return (
+    <Paper className={classes.root}>
+      <Table className={classes.table} padding="dense">
+        <TableHead>
+          <TableRow className={classes.row}>
+            <TableCell className={classes.head}>Key</TableCell>
+            <TableCell className={classes.head}>Value</TableCell>
+            <TableCell
+              className={classes.head}
+              align="right"
+              padding="checkbox"
+            />
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {keys.map(({ key, value }, idx) => (
+            <TableRow className={classes.row} key={idx}>
+              <TableCell component="th" scope="row" className={classes.cell}>
+                {key}
+              </TableCell>
+              <TableCell className={`${classes.cell} ${classes.cellFullWidth}`}>
+                <ObjectInspector data={value} />
+              </TableCell>
+              <TableCell align="right" padding="checkbox">
+                <IconButton
+                  className={classes.iconButton}
+                  onClick={handleClickRemove(idx)}>
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {keys.map(({ key, value }, idx) => (
-              <TableRow className={classes.row} key={idx}>
-                <TableCell component="th" scope="row" className={classes.cell}>
-                  {key}
-                </TableCell>
-                <TableCell
-                  className={`${classes.cell} ${classes.cellFullWidth}`}>
-                  <ObjectInspector data={value} />
-                </TableCell>
-                <TableCell align="right" padding="checkbox">
-                  <IconButton
-                    className={classes.iconButton}
-                    onClick={this.handleClickRemove(idx)}>
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
-    )
-  }
+          ))}
+        </TableBody>
+      </Table>
+    </Paper>
+  )
+}
+
+WatcherTable.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
 export default compose(
