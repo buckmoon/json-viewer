@@ -6,7 +6,6 @@
 .SplitPane {
   .Pane {
     font-size: 14px;
-    // width: 50%;
   }
 
   .Resizer {
@@ -17,7 +16,7 @@
     background-clip: padding-box;
 
     &:hover {
-      transition: all 1s ease;
+      transition: all 0.5s ease;
     }
 
     &.horizontal {

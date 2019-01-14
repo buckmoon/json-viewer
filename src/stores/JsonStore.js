@@ -18,7 +18,7 @@ const JsonStore = types
     store.set('text', self.text)
   })
   .actions(self => ({
-    setText: debounce(text => self.debouncedSetText(text), 800),
+    setText: debounce(text => self.debouncedSetText(text), 500),
     debouncedSetText(text) {
       self.text = text
     }
